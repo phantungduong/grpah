@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Layer7 - DSTAT</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background-color: #191919;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      body > div {
+        width: 100%;
+      }
+
+      #chart {
+        width: 80%;
+        margin: auto;
+      }
+
+      #info {
+        margin-top: 2em;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <h2 id="info"></h2>
+      <div id="chart"></div>
+      
+    </div>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+      window.onload = () => {
+        let info = document.getElementById("info");
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const dataString = queryParams.get('data');
+        const user = queryParams.get('user'); 
+        let data = [];
+        if (dataString) {
+          try {
+            data = JSON.parse(dataString);
+          } catch(e) {
+            console.error('Error parsing data query to array', e);
+          }
+        }
+
+        let chart = Highcharts.chart('chart', {
+          exporting: {
+            enabled: false,
+          },
+          chart: {
+            type: 'areaspline',
+            backgroundColor: '#191919',
+            events: {
+              load: function() {
+                this.renderer.text('@' + user, 280, 190)
+                  .css({
+                    color: '#FFFFFF', 
+                    fontSize: '46px',
+                    opacity: 0.5
+                  })
+                  .add();
+              }
+            }
+          },
+          title: {
+            text: 'Daviinci Graph With Love <3',
+            style: {
+              color: '#FFFFFF', 
+            }
+          },
+          xAxis: {
+            type: 'datetime',
+            labels: {
+              style: {
+                color: '#FFFFFF',
+              }
+            }
+          },
+          yAxis: {
+            title: {
+              text: '',
+            },
+            labels: {
+              style: {
+                color: '#FFFFFF', 
+              }
+            }
+          },
+          series: [{
+            name: 'Requests Per Second',
+            data: data,
+            color: '#BF283B', 
+            lineColor: '#EA4E59',   
+          }],
+          legend: {
+            itemStyle: {
+              color: '#FFFFFF'
+            }
+          },
+          credits: {
+            enabled: true,
+            text: 'Daviinci Bot Count',
+            href: null,
+            style: {
+              color: '#FFFFFF', 
+            }
+          }
+        });
+      };
+    </script>
+
+
+
+
+
+  </body>
+</html>
