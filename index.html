@@ -76,6 +76,8 @@
                     opacity: 0.5
                   })
                   .add();
+                var highestPoint = this.series[0].data.reduce((prev, current) => (prev.y > current.y) ? prev : current);
+                this.tooltip.refresh(highestPoint);
               }
             }
           },
