@@ -47,7 +47,6 @@
     <script>
       window.onload = () => {
         let info = document.getElementById("info");
-
         const queryParams = new URLSearchParams(window.location.search);
         const dataString = queryParams.get('data');
         const user = queryParams.get('user'); 
@@ -59,6 +58,7 @@
             console.error('Error parsing data query to array', e);
           }
         }
+         
 
         let chart = Highcharts.chart('chart', {
           exporting: {
@@ -69,7 +69,10 @@
             backgroundColor: '#191919',
             events: {
               load: function() {
-                this.renderer.text('@' + user, 280, 190)
+                this.renderer.text('@davincicount_bot', 280, 190)
+                  .attr({
+                    transform: 'rotate(330 450 390)'
+                  })
                   .css({
                     color: '#FFFFFF', 
                     fontSize: '46px',
@@ -82,7 +85,7 @@
             }
           },
           title: {
-            text: 'Daviinci Graph With Love <3',
+            text: 'Davinci Graph With Love <3',
             style: {
               color: '#FFFFFF', 
             }
@@ -117,10 +120,11 @@
           },
           credits: {
             enabled: true,
-            text: 'Daviinci Bot Count',
+            text: 'Davinci Bot Count',
             href: null,
             style: {
               color: '#FFFFFF', 
+              fontSize: '26px'
             }
           }
         });
